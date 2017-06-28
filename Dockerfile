@@ -17,13 +17,11 @@ ENV ROOT_URL http://localhost/ \
 # Expose port
 EXPOSE 80/tcp
 
-# Copy Meteor folder
-COPY . /build
+COPY example/.meteor/service/meteor /etc/service
 
 # Install things and Meteor
 RUN \
-  if [ -d /build/.meteor/service ]; then cp -R /build/.meteor/service/* /etc/service; fi \
-  && adduser --system --group meteor --home /home/meteor \
+  adduser --system --group meteor --home /home/meteor \
   && apt-get update \
   && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
   && apt-get --yes install git curl python build-essential \
@@ -32,9 +30,14 @@ RUN \
   && ln -sf ${NODE} /usr/local/bin/node  \
   && echo "$(dirname $(dirname "$NODE"))/lib/node_modules" > /etc/container_environment/NODE_PATH
 
+# Copy Meteor folder
+ONBUILD COPY . /build
+
 # Build APP
 ONBUILD RUN \
   cd /build \
+  && if [ -d /build/.meteor/service ]; then cp -R /build/.meteor/service/* /etc/service; fi \
+  && if [ -f /etc/service/meteor/run ]; then chmod +x /etc/service/meteor/run; fi \
   && if [ -f package.json ]; then meteor npm install; fi \
   && meteor build --directory / --architecture=os.linux.x86_64 --server-only --allow-superuser \
   && rm -rf /build \
