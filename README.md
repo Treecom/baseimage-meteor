@@ -15,7 +15,7 @@ Fetures:
 > Currently in beta testing!
 
 ## Versions
-> @TODO add image versions depened on version form baseimage and Meteor
+> @TODO add image versions depended on version form baseimage and Meteor
 
 ## How to use
 
@@ -29,4 +29,4 @@ Builded on [`phusion/baseimage-docker`](https://github.com/phusion/baseimage-doc
 
 ## License
 
-MIT
+[MIT](https://github.com/Treecom/baseimage-meteor/blob/master/LICENSE)
