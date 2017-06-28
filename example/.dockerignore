@@ -1,0 +1,6 @@
+node_modules
+.vscode
+typings
+tests
+test
+.meteor/local

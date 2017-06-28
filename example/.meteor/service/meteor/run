@@ -1,0 +1,4 @@
+#!/bin/sh
+# `/sbin/setuser meteor` runs the given command as the user `meteor`.
+# If you omit that part, the command will be run as root.
+exec /usr/local/bin/node --stack-trace-limit=1024 /bundle/main.js >> /var/log/meteor.log 2>&1
