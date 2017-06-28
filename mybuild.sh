@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-IMAGE="baseimage-meteor"
+IMAGE="martinezko/baseimage-meteor"
 TAG="latest"
 # TAG="testing"
 
