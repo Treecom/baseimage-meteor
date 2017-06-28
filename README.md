@@ -15,11 +15,17 @@ Fetures:
 > Currently in beta testing!
 
 ## Versions
-> @TODO add image versions depended on version form baseimage and Meteor
+> @TODO
 
 ## How to use
 
 See `example` folder how to build your application docker container. Simply copy files from example folder into your Meteor project. Setup options in `docker-build.sh` file and run `sh docker-build.sh`.
+
+## TODO
+
+- [ ] Add image versions depended on baseimage and Meteor versions
+- [ ] Run NodeJS App under Meteor user
+- [ ] Add example scripts for install Imagemagick, Graphicmagick, etc.
 
 ## Big thanks to
 
