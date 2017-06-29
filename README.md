@@ -25,7 +25,7 @@ See `example` folder how to build your application docker container. Simply copy
 
 - [ ] Add image versions depended on baseimage and Meteor versions
 - [ ] Run NodeJS App under Meteor user
-- [ ] Meteor proper loging with date time and maybe to syslog-ng
+- [ ] Meteor proper loging with date-time and maybe to syslog-ng
 - [ ] Production ready realease
 - [ ] Add example scripts for install Imagemagick, Graphicmagick, etc.
 
