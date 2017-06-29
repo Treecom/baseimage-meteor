@@ -8,14 +8,11 @@ LABEL name="baseimage-meteor" version="0.1"
 
 # You can owerwrite ENVs from docker files or docker-compose
 ENV ROOT_URL http://localhost/ \
-  PORT 80 \
+  PORT 3000 \
   METEOR_SETTINGS {} \
   MONGO_URL mongodb://mongodb/meteor \
   MONGO_OPLOG_URL mongodb://mongodb/local \
-  MAIL_URL smtp://user:password@mailhost:port/
-
-# Expose port
-EXPOSE 80/tcp
+  MAIL_URL smtps://user:password@mailhost:465/
 
 COPY example/.meteor/service/meteor /etc/service
 
