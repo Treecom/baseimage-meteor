@@ -12,10 +12,10 @@ Fetures:
 - You can add more serivces or deamons to run inside container for example [`memcached`](https://github.com/phusion/baseimage-docker#adding-additional-daemons)
 
 ## Project state
-> Currently in beta testing!
+> Currently in beta testing! [@TODO]{#todo}
 
 ## Versions
-> @TODO
+> [@TODO]{#todo}
 
 ## How to use
 
@@ -25,11 +25,16 @@ See `example` folder how to build your application docker container. Simply copy
 
 - [ ] Add image versions depended on baseimage and Meteor versions
 - [ ] Run NodeJS App under Meteor user
+- [ ] Meteor proper loging with date time and maybe to syslog-ng
+- [ ] Production ready realease
 - [ ] Add example scripts for install Imagemagick, Graphicmagick, etc.
 
-## Big thanks to
+## Credits
 
-Builded on [`phusion/baseimage-docker`](https://github.com/phusion/baseimage-docker) image and inspired by [`tozd/docker-meteor`](https://github.com/tozd/docker-meteor) project.
+- Builded from [`phusion/baseimage-docker`](https://github.com/phusion/baseimage-docker) image
+- Inspired by [`tozd/docker-meteor`](https://github.com/tozd/docker-meteor) repository.
+- Authors:
+	- [Martin Bucko](https://github.com/MartinBucko)
 
 ***Thanks guys!***
 
