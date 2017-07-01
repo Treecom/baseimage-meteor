@@ -12,10 +12,10 @@ Fetures:
 - You can add more serivces or deamons to run inside container for example [`memcached`](https://github.com/phusion/baseimage-docker#adding-additional-daemons)
 
 ## Project state
-> Currently in beta testing! [@TODO]{#todo}
+> Currently in beta testing! [@TODO](#todo)
 
 ## Versions
-> [@TODO]{#todo}
+> [@TODO](#todo)
 
 ## How to use
 
