@@ -22,10 +22,7 @@ RUN \
   && apt-get update \
   && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
   && apt-get --yes install git curl python build-essential \
-  && curl https://install.meteor.com/ | sed s/--progress-bar/-sL/g | sh  \
-  && export "NODE=$(find ~/.meteor/ -path '*bin/node' | grep '.meteor/packages/meteor-tool/' | sort | head -n 1)" \
-  && ln -sf ${NODE} /usr/local/bin/node  \
-  && echo "$(dirname $(dirname "$NODE"))/lib/node_modules" > /etc/container_environment/NODE_PATH
+  && curl https://install.meteor.com/ | sed s/--progress-bar/-sL/g | sh
 
 # Copy Meteor folder
 ONBUILD COPY . /build
@@ -37,9 +34,17 @@ ONBUILD RUN \
   && if [ -f /etc/service/meteor/run ]; then chmod +x /etc/service/meteor/run; fi \
   && if [ -f package.json ]; then meteor npm install; fi \
   && meteor build --directory / --architecture=os.linux.x86_64 --server-only --allow-superuser \
+  && echo "Meteor release: $(cat .meteor/release | sed 's/METEOR@//')" \
   && rm -rf /build \
   && echo "ls /bundle" \
   && ls /bundle \
+  && echo "ls /root/.meteor" \
+  && ls /root/.meteor \
+  && cd / \
+  && export "NODE=$(find /root/.meteor -path '*bin/node' | grep '.meteor/packages/meteor-tool/' | sort -rb | head -n 1)" \
+  && echo "NODE_PATH is $NODE" \
+  && ln -sf ${NODE} /usr/local/bin/node  \
+  && echo "$(dirname $(dirname "$NODE"))/lib/node_modules" > /etc/container_environment/NODE_PATH \
   && chown meteor:meteor -Rh /bundle ~/.meteor \
   && apt-get --yes purge git curl \
   && apt-get --yes autoremove \
