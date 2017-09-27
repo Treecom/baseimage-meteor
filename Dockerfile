@@ -3,7 +3,7 @@
 # Look for newer releases: https://github.com/phusion/baseimage-docker/releases
 ###
 FROM phusion/baseimage:0.9.22
-LABEL name="baseimage-meteor" version="0.1"
+LABEL name="baseimage-meteor" version="0.1.1"
 
 # You can owerwrite ENVs from docker files or docker-compose
 ENV ROOT_URL http://localhost/ \
