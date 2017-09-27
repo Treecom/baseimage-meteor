@@ -1,6 +1,6 @@
 FROM martinezko/baseimage-meteor
 
-# For overwriting environment variables (if you don't use docker-compose file)
+## For overwriting environment variables (if you don't use docker-compose file)
 # ENV
 # 	APP: meteorexample \
 # 	ROOT_URL: http://meteor.click/ \
@@ -12,6 +12,8 @@ FROM martinezko/baseimage-meteor
 # 	METEOR_SETTINGS: '{}'
 
 # VOLUME /var/log/meteor.log
+## OR
+# VOLUME ./log:/var/log
 
-# Expose port
+## Expose port
 EXPOSE 3000/tcp

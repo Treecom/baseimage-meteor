@@ -1,3 +1,5 @@
+# NOTE: You need to build your image and rewrite image property (and others)
+
 version: '2.0'
 
 services:
@@ -17,5 +19,5 @@ services:
       NODE_ENV: production
       PORT: 80
       METEOR_SETTINGS: '{}' # paste meteor settings.json here in one line!
-    # volumes:
-    #   - /some/mounts:/bundle/files
+    volumes:
+      - ./log:/var/log

@@ -18,21 +18,21 @@ docker pull ${FROM}:${FROM_TAG} &&
 # build container
 docker build --rm -t ${CONTAINER}:${TAG} . &&
 
-# create tag on container
+# create tag on container (private or public registry)
 if [ $REGISTRY ]; then
 	docker tag ${CONTAINER}:${TAG} ${REGISTRY}/${CONTAINER}:${TAG}
 else
 	docker tag ${CONTAINER}:${TAG} ${CONTAINER}:${TAG}
 fi &&
 
-# push to our registry
+# push to docker registry (private or public)
 if [ $REGISTRY ]; then
 	docker push ${REGISTRY}/${CONTAINER}:${TAG}
 else
 	docker push ${CONTAINER}:${TAG}
 fi &&
 
-# clean images if needed
+# clean images if needed (on CI build for example)
 # docker rmi -f ${CONTAINER}:${TAG} ${REGISTRY}/${CONTAINER}:${TAG} ${FROM}:${FROM_TAG}
 
 # to run your container
