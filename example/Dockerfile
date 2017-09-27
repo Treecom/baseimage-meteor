@@ -1,5 +1,4 @@
 FROM martinezko/baseimage-meteor
-MAINTAINER Martin Bucko <bucko@treecom.net>
 
 # For overwriting environment variables (if you don't use docker-compose file)
 # ENV

@@ -3,7 +3,6 @@
 # Look for newer releases: https://github.com/phusion/baseimage-docker/releases
 ###
 FROM phusion/baseimage:0.9.22
-MAINTAINER Martin Bucko <bucko@treecom.net>
 LABEL name="baseimage-meteor" version="0.1"
 
 # You can owerwrite ENVs from docker files or docker-compose
@@ -32,24 +31,21 @@ ONBUILD RUN \
   cd /build \
   && if [ -d /build/.meteor/service ]; then cp -R /build/.meteor/service/* /etc/service; fi \
   && if [ -f /etc/service/meteor/run ]; then chmod +x /etc/service/meteor/run; fi \
-  && if [ -f package.json ]; then meteor npm install; fi \
-  && meteor build --directory / --architecture=os.linux.x86_64 --server-only --allow-superuser \
-  && echo "Meteor release: $(cat .meteor/release | sed 's/METEOR@//')" \
-  && rm -rf /build \
-  && echo "ls /bundle" \
-  && ls /bundle \
-  && echo "ls /root/.meteor" \
-  && ls /root/.meteor \
-  && cd / \
+  && echo "Meteor app release: $(cat .meteor/release | sed 's/METEOR@//')" \
+  && echo "Meteor updated to release: $(meteor --version --allow-superuser)" \
   && export "NODE=$(find /root/.meteor -path '*bin/node' | grep '.meteor/packages/meteor-tool/' | sort -rb | head -n 1)" \
-  && echo "NODE_PATH is $NODE" \
-  && ln -sf ${NODE} /usr/local/bin/node  \
+  && ln -sf ${NODE} /usr/local/bin/node \
   && echo "$(dirname $(dirname "$NODE"))/lib/node_modules" > /etc/container_environment/NODE_PATH \
+  && export "NPM_PATH=$(dirname "$NODE")/npm" \
+  && echo "$NPM_PATH" > /etc/container_environment/NPM_PATH \
+  && $NPM_PATH install --production --quiet \
+  && meteor build --architecture=os.linux.x86_64 --server-only --allow-superuser --directory / \
+  && (cd /bundle/programs/server && $NPM_PATH install --quiet && $NPM_PATH install bcrypt --quiet) && echo  "$NPM_PATH\n - npm install DONE" \
   && chown meteor:meteor -Rh /bundle ~/.meteor \
   && apt-get --yes purge git curl \
   && apt-get --yes autoremove \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /build
 
 # init baseimage services
 CMD ["/sbin/my_init"]
