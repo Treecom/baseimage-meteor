@@ -2,8 +2,8 @@
 # From phusion/baseimage: https://github.com/phusion/baseimage-docker
 # Look for newer releases: https://github.com/phusion/baseimage-docker/releases
 ###
-FROM phusion/baseimage:0.9.22
-LABEL name="baseimage-meteor" version="0.1.2"
+FROM phusion/baseimage:0.10.1
+LABEL name="baseimage-meteor" version="0.2.0"
 
 # You can owerwrite ENVs from docker files or docker-compose
 ENV ROOT_URL http://localhost/ \
@@ -20,8 +20,8 @@ RUN \
   adduser --system --group meteor --home /home/meteor \
   && apt-get update \
   && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
-  && apt-get --yes install git curl python build-essential \
-  && curl https://install.meteor.com/ | sed s/--progress-bar/-sL/g | sh
+  && apt-get --yes install git curl python build-essential g++ \
+  && curl -sL https://install.meteor.com/ | sed s/--progress-bar/-sL/g | sh
 
 # Copy Meteor folder
 ONBUILD COPY . /build
@@ -38,9 +38,11 @@ ONBUILD RUN \
   && echo "$(dirname $(dirname "$NODE"))/lib/node_modules" > /etc/container_environment/NODE_PATH \
   && export "NPM_PATH=$(dirname "$NODE")/npm" \
   && echo "$NPM_PATH" > /etc/container_environment/NPM_PATH \
-  && $NPM_PATH install --production --quiet \
+  && $NPM_PATH install --quiet \
+  && $NPM_PATH build \
   && meteor build --architecture=os.linux.x86_64 --server-only --allow-superuser --directory / \
-  && (cd /bundle/programs/server && $NPM_PATH install --quiet && $NPM_PATH install bcrypt --quiet) && echo  "$NPM_PATH\n - npm install DONE" \
+  && (cd /bundle/programs/server && $NPM_PATH install --quiet && $NPM_PATH install bcrypt --quiet) \
+  && echo  "$NPM_PATH\n - npm install DONE" \
   && chown meteor:meteor -Rh /bundle ~/.meteor \
   && apt-get --yes purge git curl \
   && apt-get --yes autoremove \
